@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 
-const logoLetterVariants = {
+const logoLetterVariants: any = {
   hidden: { opacity: 0, y: 80, rotateX: 90, filter: "blur(12px)" },
   visible: (i: number) => ({
     opacity: 1,
@@ -17,7 +17,7 @@ const logoLetterVariants = {
   }),
 };
 
-const dotVariants = {
+const dotVariants: any = {
   hidden: { opacity: 0, scale: 0, y: 20 },
   visible: {
     opacity: 1,

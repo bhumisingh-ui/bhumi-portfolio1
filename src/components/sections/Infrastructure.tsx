@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, Server, Database, Network, Power, RefreshCw, Zap, Cpu } from "lucide-react";
+import { Terminal, Server, Database, Power, RefreshCw, Zap, Cpu } from "lucide-react";
 import { SectionWrapper, StaggerContainer, staggerChildVariants } from "../ui/SectionWrapper";
 import { SparkleIcon } from "../ui/SparkleIcon";
 import { DecorativeRings } from "../ui/DecorativeRings";
@@ -237,11 +237,11 @@ function NetworkDiagram({ step }: { step: number }) {
   const pathDbApi = `M ${posDb.x} ${posDb.y} Q 120 200 ${posApi.x} ${posApi.y}`;
 
   // Overshoot easing for drawing lines
-  const drawTransition = { duration: 1.2, ease: [0.34, 1.56, 0.64, 1] };
+  const drawTransition = { duration: 1.2, ease: [0.34, 1.56, 0.64, 1] as any };
 
   // Generate background particles
   const particles = useMemo(() => {
-    return Array.from({ length: 15 }).map((_, i) => ({
+    return Array.from({ length: 15 }).map(() => ({
       x: Math.random() * 400,
       y: Math.random() * 400 + 400,
       dur: 10 + Math.random() * 20,

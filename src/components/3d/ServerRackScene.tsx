@@ -19,7 +19,6 @@ export default function ServerRackScene({ deployState, onStepComplete, onDeployC
   // Colors based on theme
   const plum = "#4a2f4d"; // var(--color-plum-mid)
   const amber = "#d4a017"; // var(--color-amber)
-  const cream = "#f5f1e8"; // var(--color-cream)
 
   // Reset logic
   useEffect(() => {
@@ -162,12 +161,12 @@ function BlinkingLight({ isActive, position, color, speed }: { isActive: boolean
 }
 
 function NetworkConnection({ start, end, color }: { start: [number, number, number]; end: [number, number, number]; color: string }) {
-  const materialRef = useRef<THREE.LineBasicMaterial>(null);
+  const lineRef = useRef<any>(null);
   const meshMaterialRef = useRef<THREE.MeshStandardMaterial>(null);
 
   useFrame(() => {
-    if (materialRef.current && materialRef.current.opacity < 1) {
-      materialRef.current.opacity = Math.min(materialRef.current.opacity + 0.05, 1);
+    if (lineRef.current?.material && lineRef.current.material.opacity < 1) {
+      lineRef.current.material.opacity = Math.min(lineRef.current.material.opacity + 0.05, 1);
     }
     if (meshMaterialRef.current && meshMaterialRef.current.opacity < 1) {
       meshMaterialRef.current.opacity = Math.min(meshMaterialRef.current.opacity + 0.05, 1);
@@ -187,7 +186,7 @@ function NetworkConnection({ start, end, color }: { start: [number, number, numb
         lineWidth={2}
         transparent
         opacity={0}
-        ref={materialRef}
+        ref={lineRef}
       />
       {/* Node at the end */}
       <Sphere args={[0.1, 16, 16]} position={end}>

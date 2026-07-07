@@ -64,7 +64,7 @@ export function Typewriter({
       <motion.span
         className="inline-block ml-0.5"
         animate={{ opacity: [1, 0] }}
-        transition={{ duration: 0.6, repeat: Infinity, ease: "steps(2)" }}
+        transition={{ duration: 0.6, repeat: Infinity, ease: "steps(2)" as any }}
         style={{ color: cursorColor, fontWeight: 300 }}
       >
         |
