@@ -4,16 +4,16 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
-          "bg-[var(--color-amber)] text-[var(--color-text-dark)] hover:bg-[var(--color-gold)] hover:shadow-[0_8px_25px_color-mix(in_srgb,var(--color-amber)_35%,transparent)]",
+          "bg-[var(--color-primary)] text-white hover:bg-[color-mix(in_srgb,var(--color-primary)_80%,#fff)] hover:shadow-[0_8px_25px_color-mix(in_srgb,var(--color-primary)_35%,transparent)]",
         outline:
-          "border-2 border-[var(--color-amber)] text-[var(--color-amber)] bg-transparent hover:bg-[color-mix(in_srgb,var(--color-amber)_12%,transparent)]",
+          "border-2 border-[var(--color-primary)] text-[var(--color-primary)] bg-transparent hover:bg-[color-mix(in_srgb,var(--color-primary)_12%,transparent)]",
         ghost:
-          "text-[var(--color-amber)] hover:bg-[color-mix(in_srgb,var(--color-amber)_12%,transparent)]",
+          "text-[var(--color-primary)] hover:bg-[color-mix(in_srgb,var(--color-primary)_12%,transparent)]",
       },
       size: {
         default: "h-11 px-6 py-3",

@@ -33,15 +33,15 @@ export function ProjectCard({ project, index, isFeatured }: ProjectCardProps) {
         </div>
         <div className="flex-1 p-4 sm:p-6 relative z-10 flex flex-col justify-center">
           <div className="text-[var(--color-primary)] opacity-90">{"function optimize(code: string) {"}</div>
-          <div className="ml-4 opacity-50 text-white">{"// Analyzing AST structure..."}</div>
-          <div className="ml-4 opacity-80 text-white">{"const ast = parse(code);"}</div>
+          <div className="ml-4 opacity-50 text-[var(--color-text-secondary)]">{"// Analyzing AST structure..."}</div>
+          <div className="ml-4 opacity-80 text-[var(--color-text-primary)]">{"const ast = parse(code);"}</div>
           <div className="ml-4 mt-3 p-3 rounded-md border bg-[color-mix(in_srgb,var(--color-primary)_15%,transparent)] border-[color-mix(in_srgb,var(--color-primary)_30%,transparent)] text-[var(--color-primary)] shadow-[0_0_15px_color-mix(in_srgb,var(--color-primary)_20%,transparent)] backdrop-blur-sm">
             <div className="flex items-center gap-1.5 font-sans font-bold mb-1 tracking-wide uppercase text-[10px]">
               <MessageSquare size={12} /> AI Suggestion
             </div>
             Consider using an iterative approach here to avoid call stack limits on large inputs.
           </div>
-          <div className="ml-4 mt-3 opacity-80 text-white">{"return optimizeAST(ast);"}</div>
+          <div className="ml-4 mt-3 opacity-80 text-[var(--color-text-primary)]">{"return optimizeAST(ast);"}</div>
           <div className="text-[var(--color-primary)] opacity-90">{"}"}</div>
         </div>
       </div>
@@ -60,10 +60,10 @@ export function ProjectCard({ project, index, isFeatured }: ProjectCardProps) {
         </div>
         <div className="flex-1 flex items-center justify-center p-8 relative z-10">
           <div className="text-center">
-            <div className="text-3xl sm:text-4xl font-display font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70 group-hover:from-[var(--color-primary)] group-hover:to-[var(--color-secondary)] transition-all duration-500">
+            <div className="text-3xl sm:text-4xl font-display font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-text-primary)] to-[var(--color-text-secondary)] group-hover:from-[var(--color-primary)] group-hover:to-[var(--color-secondary)] transition-all duration-500">
               {project.title}
             </div>
-            <p className="text-sm text-white/50 tracking-wider uppercase">
+            <p className="text-sm text-[var(--color-text-secondary)] tracking-wider uppercase">
               {project.tech.join(" · ")}
             </p>
           </div>
@@ -81,7 +81,7 @@ export function ProjectCard({ project, index, isFeatured }: ProjectCardProps) {
       className="group h-full flex"
     >
       <Card
-        className="w-full flex flex-col relative border border-white/5 transition-all duration-500 overflow-hidden bg-gradient-to-b from-[var(--color-surface)] to-[#150207] shadow-xl group-hover:shadow-[0_20px_50px_color-mix(in_srgb,var(--color-primary)_20%,transparent)] group-hover:border-[color-mix(in_srgb,var(--color-primary)_50%,transparent)] rounded-2xl"
+        className="w-full flex flex-col relative border border-[rgba(240,240,245,0.08)] transition-all duration-500 overflow-hidden bg-[var(--color-surface-2)] group-hover:bg-[var(--color-surface-3)] shadow-xl group-hover:shadow-[0_20px_50px_color-mix(in_srgb,var(--color-primary)_20%,transparent)] group-hover:border-[color-mix(in_srgb,var(--color-primary)_50%,transparent)] rounded-2xl"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500 pointer-events-none" />
         
@@ -90,7 +90,7 @@ export function ProjectCard({ project, index, isFeatured }: ProjectCardProps) {
           transition={{ duration: 0.4, ease: "easeOut" }}
           className="w-full flex flex-col h-full z-10 relative"
         >
-          <div className={`relative w-full overflow-hidden border-b border-white/5 bg-[#0a0205] ${isFeatured ? 'aspect-video md:aspect-[21/9]' : 'aspect-video'}`}>
+          <div className={`relative w-full overflow-hidden border-b border-[rgba(240,240,245,0.08)] bg-[var(--color-surface-1)] ${isFeatured ? 'aspect-video md:aspect-[21/9]' : 'aspect-video'}`}>
             <motion.div
               variants={{ hover: { scale: 1.04 } }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -101,11 +101,11 @@ export function ProjectCard({ project, index, isFeatured }: ProjectCardProps) {
           </div>
 
           <CardHeader className="pt-7 px-7">
-            <CardTitle className={`font-heading font-bold tracking-tight text-white/90 group-hover:text-white transition-colors duration-300 ${isFeatured ? 'text-3xl' : 'text-2xl'}`}>
+            <CardTitle className={`font-heading font-bold tracking-tight text-[var(--color-text-primary)] group-hover:text-white transition-colors duration-300 ${isFeatured ? 'text-3xl' : 'text-2xl'}`}>
               {project.title}
             </CardTitle>
-            <p className="text-[var(--color-primary)] text-sm font-semibold tracking-wide mt-1 uppercase">{project.subtitle}</p>
-            <CardDescription className="mt-4 text-base leading-relaxed text-white/60 group-hover:text-white/80 transition-colors duration-300">
+            <p className="text-[var(--color-secondary)] text-sm font-semibold tracking-wide mt-1 uppercase">{project.subtitle}</p>
+            <CardDescription className="mt-4 text-base leading-relaxed text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors duration-300">
               {project.description}
             </CardDescription>
           </CardHeader>
@@ -116,7 +116,7 @@ export function ProjectCard({ project, index, isFeatured }: ProjectCardProps) {
                 <Badge
                   key={tag}
                   variant="outline"
-                  className="border-white/10 text-white/50 bg-white/5 group-hover:border-[color-mix(in_srgb,var(--color-secondary)_40%,transparent)] group-hover:text-[var(--color-secondary)] group-hover:bg-[color-mix(in_srgb,var(--color-secondary)_10%,transparent)] transition-all duration-300 py-1 px-3"
+                  className="border-[rgba(240,240,245,0.08)] text-[var(--color-text-secondary)] bg-[var(--color-surface-1)] group-hover:border-[var(--color-secondary)] group-hover:text-[var(--color-background)] group-hover:bg-[var(--color-secondary)] transition-all duration-300 py-1 px-3"
                 >
                   {tag}
                 </Badge>
@@ -124,7 +124,7 @@ export function ProjectCard({ project, index, isFeatured }: ProjectCardProps) {
             </div>
           </CardContent>
 
-          <CardFooter className="pt-6 pb-7 px-7 mt-4 border-t border-white/5 flex justify-end">
+          <CardFooter className="pt-6 pb-7 px-7 mt-4 border-t border-[rgba(240,240,245,0.08)] flex justify-end">
             <Button asChild size="sm" variant={project.linkType === 'live' ? 'default' : 'outline'} className="rounded-full shadow-lg hover:shadow-[0_0_20px_color-mix(in_srgb,var(--color-primary)_40%,transparent)] transition-all duration-300">
               <a href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} ${project.linkType}`}>
                 {project.linkType === "live" ? <ExternalLink size={16} /> : <GithubIcon size={16} />}

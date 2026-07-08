@@ -25,17 +25,17 @@ function ExperienceEntry({
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="sm:col-span-3">
-        <p className="text-xs uppercase tracking-[0.25em] text-[var(--color-accent)]">{exp.period}</p>
+        <p className="text-xs uppercase tracking-[0.25em] text-[var(--color-primary)]">{exp.period}</p>
       </div>
       <div className="sm:col-span-4">
-        <h3 className="font-display text-xl sm:text-2xl font-semibold">{exp.role}</h3>
-        <p className="text-sm text-[var(--text-secondary)] mt-1">{exp.organization}</p>
+        <h3 className="font-display text-xl sm:text-2xl font-semibold text-[var(--color-text-primary)]">{exp.role}</h3>
+        <p className="text-sm text-[var(--color-text-secondary)] mt-1">{exp.organization}</p>
       </div>
       <div className="sm:col-span-5">
         <ul className="space-y-2">
           {exp.highlights.map((h, j) => (
-            <li key={j} className="text-sm text-[var(--text-secondary)] leading-relaxed flex gap-3">
-              <span className="text-[var(--color-accent)] shrink-0 mt-0.5">—</span>
+            <li key={j} className="text-sm text-[var(--color-text-secondary)] leading-relaxed flex gap-3">
+              <span className="text-[var(--color-primary)] shrink-0 mt-0.5">—</span>
               {h}
             </li>
           ))}
@@ -65,8 +65,8 @@ export function Experience() {
             speed={0.15}
             squareSize={40}
             direction="up"
-            borderColor="#3a2438"
-            hoverFillColor="#dc2f02"
+            borderColor="rgba(240, 240, 245, 0.15)"
+            hoverFillColor="var(--color-secondary)"
             shape="hexagon"
             hoverTrailAmount={8}
           />
@@ -77,9 +77,9 @@ export function Experience() {
         <div className="col-span-12 lg:col-span-4 relative">
           <SectionHeading label="04 — Journey" title="Experience" />
           {!reduced && (
-            <div className="hidden lg:block absolute left-0 top-32 w-px h-48 bg-[color-mix(in_srgb,var(--color-text-primary)_8%,transparent)] overflow-hidden">
+            <div className="hidden lg:block absolute left-0 top-32 w-px h-48 bg-[rgba(240,240,245,0.08)] overflow-hidden">
               <motion.div
-                className="w-full bg-[var(--color-accent)] origin-top"
+                className="w-full bg-[var(--color-primary)] origin-top"
                 style={{ height: lineHeight }}
               />
             </div>
@@ -87,7 +87,7 @@ export function Experience() {
         </div>
 
         <div className="col-span-12 lg:col-span-8 lg:col-start-5 mt-8 lg:mt-0">
-          <p className="text-[var(--text-secondary)] mb-12 max-w-md">
+          <p className="text-[var(--color-text-secondary)] mb-12 max-w-md">
             Positions of responsibility and professional growth.
           </p>
           {experience.map((exp, i) => (

@@ -37,8 +37,8 @@ export function Contact() {
             speed={0.25}
             squareSize={40}
             direction="diagonal"
-            borderColor="#695688"
-            hoverFillColor="#dc2f02"
+            borderColor="rgba(240, 240, 245, 0.15)"
+            hoverFillColor="var(--color-tertiary)"
             shape="hexagon"
             hoverTrailAmount={13}
           />
@@ -52,27 +52,27 @@ export function Contact() {
             <p className="section-label mb-6">05 — Contact</p>
             <h2 className="heading-xl font-display mb-8">
               <span className="block overflow-hidden">
-                <ClipPathReveal text="Let's build" delay={0.1} />
+                <ClipPathReveal text="Let's" delay={0.1} />
               </span>
               <span className="block overflow-hidden text-gradient-accent">
-                <ClipPathReveal text="something." delay={0.3} />
+                <ClipPathReveal text="build something." delay={0.3} />
               </span>
             </h2>
 
             <motion.a
               href={`mailto:${portfolio.contact.email}`}
               data-cursor="hover"
-              className="group inline-block font-display text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[var(--text-primary)] hover:text-[var(--color-accent)] transition-colors duration-500 focus-ring break-all"
+              className="group inline-block font-display text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[var(--color-text-primary)] hover:text-[var(--color-primary)] transition-colors duration-500 focus-ring break-all"
               whileHover={{ x: 4 }}
             >
               {portfolio.contact.email}
               <ArrowUpRight
                 size={32}
-                className="inline ml-2 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-y-2 group-hover:translate-y-0"
+                className="inline ml-2 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-y-2 group-hover:translate-y-0 text-[var(--color-primary)]"
               />
             </motion.a>
 
-            <p className="mt-6 text-[var(--text-secondary)]">{portfolio.contact.phone}</p>
+            <p className="mt-6 text-[var(--color-text-secondary)]">{portfolio.contact.phone}</p>
 
             <div className="flex flex-wrap gap-4 mt-8">
               {portfolio.contact.socials.map((social) => (
@@ -82,7 +82,7 @@ export function Contact() {
                   target="_blank"
                   rel="noopener noreferrer"
                   data-cursor="hover"
-                  className="pill-outline hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors focus-ring flex items-center gap-2"
+                  className="pill-outline hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors focus-ring flex items-center gap-2"
                 >
                   {social.platform === "github" && <GithubIcon size={14} />}
                   {social.platform === "linkedin" && <LinkedinIcon size={14} />}
@@ -93,17 +93,16 @@ export function Contact() {
             </div>
           </div>
 
-          {/* Form */}
           <div className="col-span-12 lg:col-span-5">
             <motion.form
               onSubmit={handleSubmit}
-              className="border-subtle p-6 sm:p-8 bg-[var(--color-surface)]"
+              className="border-subtle p-6 sm:p-8 bg-[var(--color-surface-1)]"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-sm text-[var(--text-secondary)] mb-6">
+              <p className="text-sm text-[var(--color-text-secondary)] mb-6">
                 Have a project in mind? Send a message.
               </p>
               <div className="space-y-5">

@@ -50,7 +50,7 @@ export function Skills() {
           <SectionHeading label="02 — Expertise" title="Skills & Tools" />
         </div>
         <div className="col-span-12 lg:col-span-6 lg:flex lg:items-end lg:justify-end">
-          <p className="text-[var(--text-secondary)] text-base max-w-md lg:text-right">
+          <p className="text-[var(--color-text-secondary)] text-base max-w-md lg:text-right">
             Technologies and tools I work with — sized by proficiency and frequency of use.
           </p>
         </div>
@@ -60,7 +60,7 @@ export function Skills() {
         {[marqueeRow1, marqueeRow2].map((row, rowIndex) => (
           <div
             key={rowIndex}
-            className="overflow-hidden border-y border-[color-mix(in_srgb,var(--color-text-primary)_6%,transparent)] py-5 group"
+            className="overflow-hidden border-y border-[rgba(240,240,245,0.08)] py-5 group"
           >
             {reduced ? (
               <div className="flex flex-wrap gap-3 justify-center px-4">
@@ -85,7 +85,7 @@ export function Skills() {
                     key={`${skill}-${i}`}
                     data-cursor="hover"
                     className="inline-flex flex-col items-start shrink-0 cursor-default"
-                    whileHover={{ scale: 1.05, color: "var(--color-accent)" }}
+                    whileHover={{ scale: 1.05, color: "var(--color-primary)" }}
                   >
                     <span
                       className="font-display font-semibold tracking-tight transition-colors"
@@ -93,7 +93,7 @@ export function Skills() {
                     >
                       {skill}
                     </span>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--text-secondary)] mt-1">
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-secondary)] mt-1">
                       {category}
                     </span>
                   </motion.span>
@@ -108,17 +108,17 @@ export function Skills() {
         {portfolio.skillCategories.map((cat, i) => (
           <motion.div
             key={cat.id}
-            className="border-subtle p-4 bg-[var(--color-surface)]"
+            className="border-subtle p-4 bg-[var(--color-surface-1)] hover:border-[var(--color-primary)] hover:shadow-[0_0_15px_color-mix(in_srgb,var(--color-primary)_20%,transparent)] transition-all duration-300"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
           >
-            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--color-accent)] mb-2">
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--color-primary)] mb-2">
               {String(i + 1).padStart(2, "0")}
             </p>
-            <p className="font-display font-medium text-sm">{cat.label}</p>
-            <p className="text-xs text-[var(--text-secondary)] mt-1">{cat.skills.length} skills</p>
+            <p className="font-display font-medium text-sm text-[var(--color-text-primary)]">{cat.label}</p>
+            <p className="text-xs text-[var(--color-text-secondary)] mt-1">{cat.skills.length} skills</p>
           </motion.div>
         ))}
       </div>
