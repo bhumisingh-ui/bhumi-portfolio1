@@ -5,12 +5,13 @@ export interface SkillCategory {
 }
 
 export interface Project {
+  id: number;
   title: string;
+  subtitle: string;
   description: string;
-  tags: string[];
-  repoUrl?: string;
-  liveUrl?: string;
-  highlights: string[];
+  tech: string[];
+  linkType: "live" | "code";
+  link: string;
 }
 
 export interface Experience {
@@ -42,7 +43,7 @@ export const portfolio = {
     cta: { label: "View My Work", href: "#projects" },
     ctaSecondary: { label: "Get In Touch", href: "#contact" },
     stats: [
-      { value: 100, label: "LeetCode Problems", suffix: "+", animate: true },
+      { value: 0, label: "LeetCode Problems", suffix: "+", animate: true, fetchLive: "leetcode" },
       { value: "8.94", label: "CGPA", suffix: "", animate: false },
       { value: "2", label: "Major Projects", suffix: "", animate: false },
     ],
@@ -86,40 +87,32 @@ export const portfolio = {
   ] satisfies SkillCategory[],
   projects: [
     {
+      id: 1,
       title: "Wanderlust",
-      description:
-        "A full-stack Airbnb-like property listing platform with user authentication, reviews, and a responsive mobile-friendly interface. Built end-to-end with the MERN-adjacent stack.",
-      tags: ["Node.js", "Express", "MongoDB", "Passport.js", "Bootstrap"],
-      liveUrl: "https://wanderlust-uz32.onrender.com/listings",
-      highlights: [
-        "Full-stack property listing platform with user authentication and reviews",
-        "Secure login and session management using Passport.js and Connect-Mongo",
-        "Responsive, mobile-friendly UI built with Bootstrap",
-      ],
+      subtitle: "Airbnb-Like Property Listing Platform",
+      description: "Full-stack property listing platform with user authentication, reviews, and secure session management.",
+      tech: ["Node.js", "Express.js", "MongoDB", "Passport.js", "Bootstrap"],
+      linkType: "live",
+      link: "https://wanderlust-uz32.onrender.com/listings"
     },
     {
+      id: 2,
       title: "InterviewPrep",
-      description:
-        "An AI-powered platform that simulates real technical interviews with timed sessions, dynamic question generation, and performance insights across core CS topics.",
-      tags: ["React", "Next.js", "Gemini AI", "Neon.tech", "Clerk"],
-      repoUrl: "https://github.com/popeyepie1211/InterviewPrep",
-      highlights: [
-        "AI-based platform simulating real technical interviews with timed sessions",
-        "Dynamic question generation and answer evaluation using Gemini AI",
-        "Topic-wise interviews (DSA, OS, DBMS, CS fundamentals) with performance insights",
-        "Secure authentication and user management via Clerk",
-      ],
+      subtitle: "AI-Powered Technical Interview Simulator",
+      description: "AI-based platform simulating real technical interviews with timed sessions, dynamic question generation, and performance insights across DSA, OS, DBMS, and CS fundamentals.",
+      tech: ["React", "Next.js", "Gemini AI", "Neon.tech", "Clerk"],
+      linkType: "code",
+      link: "https://github.com/popeyepie1211/InterviewPrep"
     },
     {
+      id: 3,
       title: "CodeMentor AI",
-      description:
-        "AI-powered code review platform that helps developers write better code by providing instant feedback, bug detection, performance analysis, code quality suggestions, and automated review reports",
-      tags: ["AI", "Code Review", "Developer Tools"],
-      repoUrl: "#",
-      highlights: [
-        "Users upload code or write it directly inside a built-in editor and receive AI-generated feedback within seconds — no need to wait on a senior developer or reviewer",
-      ],
-    },
+      subtitle: "AI Code Review Platform",
+      description: "AI-powered code review platform providing instant feedback, bug detection, performance analysis, code quality suggestions, and automated review reports.",
+      tech: ["AI", "Code Review", "Developer Tools"],
+      linkType: "code",
+      link: "#" // TODO: add repo link once confirmed
+    }
   ] satisfies Project[],
   experience: [
     {

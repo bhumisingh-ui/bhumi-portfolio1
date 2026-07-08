@@ -21,7 +21,7 @@ export function FloatingLabelInput({ label, id, className, value, ...props }: Fl
           "absolute left-4 pointer-events-none text-sm font-medium transition-colors duration-200",
           floated ? "top-2 text-xs" : "top-1/2 -translate-y-1/2"
         )}
-        style={{ color: floated ? "var(--color-amber)" : "var(--text-secondary)" }}
+        style={{ color: floated ? "var(--color-accent)" : "var(--text-secondary)" }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
       >
         {label}
@@ -34,8 +34,8 @@ export function FloatingLabelInput({ label, id, className, value, ...props }: Fl
           className
         )}
         style={{
-          background: "color-mix(in srgb, var(--color-amber) 8%, var(--bg-surface))",
-          border: "1px solid color-mix(in srgb, var(--color-amber) 20%, transparent)",
+          background: "color-mix(in srgb, var(--color-accent) 4%, var(--bg-surface))",
+          border: "1px solid color-mix(in srgb, var(--color-border) 40%, transparent)",
           color: "var(--text-primary)",
         }}
         onFocus={(e) => {
@@ -71,7 +71,7 @@ export function FloatingLabelTextarea({ label, id, className, value, ...props }:
           "absolute left-4 pointer-events-none text-sm font-medium transition-colors duration-200",
           floated ? "top-3 text-xs" : "top-5"
         )}
-        style={{ color: floated ? "var(--color-amber)" : "var(--text-secondary)" }}
+        style={{ color: floated ? "var(--color-accent)" : "var(--text-secondary)" }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
       >
         {label}
@@ -84,8 +84,8 @@ export function FloatingLabelTextarea({ label, id, className, value, ...props }:
           className
         )}
         style={{
-          background: "color-mix(in srgb, var(--color-amber) 8%, var(--bg-surface))",
-          border: "1px solid color-mix(in srgb, var(--color-amber) 20%, transparent)",
+          background: "color-mix(in srgb, var(--color-accent) 4%, var(--bg-surface))",
+          border: "1px solid color-mix(in srgb, var(--color-border) 40%, transparent)",
           color: "var(--text-primary)",
         }}
         onFocus={(e) => {

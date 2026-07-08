@@ -1,126 +1,70 @@
-import { useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { ExternalLink, MessageSquare } from "lucide-react";
 import { GithubIcon } from "./Icons";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "./card";
 import { Badge } from "./badge";
 import { Button } from "./button";
-import { cardVariants } from "@/lib/animations";
 import type { Project } from "../../data/portfolio";
 
 interface ProjectCardProps {
   project: Project;
   index: number;
+  isFeatured?: boolean;
 }
 
-export function ProjectCard({ project, index }: ProjectCardProps) {
-  const ref = useRef<HTMLDivElement>(null);
+export function ProjectCard({ project, index, isFeatured }: ProjectCardProps) {
   const reduced = useReducedMotion();
-  const [isHovered, setIsHovered] = useState(false);
-
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 15 });
-  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 15 });
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (reduced) return;
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-    setIsHovered(false);
-  };
 
   const mockup =
     project.title === "CodeMentor AI" ? (
-      <div
-        className="rounded-lg overflow-hidden mb-0"
-        style={{
-          background: "color-mix(in srgb, var(--color-plum) 30%, var(--bg-surface))",
-          border: "1px solid color-mix(in srgb, var(--color-amber) 10%, transparent)",
-        }}
-      >
-        <div
-          className="flex items-center gap-2 px-4 py-3"
-          style={{
-            borderBottom: "1px solid color-mix(in srgb, var(--color-amber) 10%, transparent)",
-            background: "color-mix(in srgb, var(--color-plum) 50%, var(--bg-surface))",
-          }}
-        >
+      <div className="w-full h-full bg-black/50 flex flex-col font-mono text-xs sm:text-sm relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-black/80 relative z-10">
           <div className="flex gap-1.5">
             <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
             <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
             <div className="w-3 h-3 rounded-full bg-[#28c840]" />
           </div>
-          <div className="flex-1 text-xs opacity-60 flex gap-4 ml-4 font-mono">
+          <div className="flex-1 text-xs opacity-60 flex gap-4 ml-4 text-white">
             <span>main.tsx</span>
             <span className="opacity-50">utils.ts</span>
           </div>
         </div>
-        <div className="aspect-video p-4 sm:p-6 font-mono text-xs sm:text-sm relative overflow-hidden">
-          <div style={{ color: "var(--color-amber)", opacity: 0.8 }}>{"function optimize(code: string) {"}</div>
-          <div className="ml-4 opacity-60">{"// Analyzing AST structure..."}</div>
-          <div className="ml-4 opacity-80">{"const ast = parse(code);"}</div>
-          <div
-            className="ml-4 mt-2 p-2 rounded-md border"
-            style={{
-              background: "color-mix(in srgb, var(--color-amber) 10%, transparent)",
-              borderColor: "color-mix(in srgb, var(--color-amber) 20%, transparent)",
-              color: "var(--color-amber)",
-            }}
-          >
-            <div className="flex items-center gap-1.5 font-sans font-medium mb-1">
+        <div className="flex-1 p-4 sm:p-6 relative z-10 flex flex-col justify-center">
+          <div className="text-[var(--color-primary)] opacity-90">{"function optimize(code: string) {"}</div>
+          <div className="ml-4 opacity-50 text-white">{"// Analyzing AST structure..."}</div>
+          <div className="ml-4 opacity-80 text-white">{"const ast = parse(code);"}</div>
+          <div className="ml-4 mt-3 p-3 rounded-md border bg-[color-mix(in_srgb,var(--color-primary)_15%,transparent)] border-[color-mix(in_srgb,var(--color-primary)_30%,transparent)] text-[var(--color-primary)] shadow-[0_0_15px_color-mix(in_srgb,var(--color-primary)_20%,transparent)] backdrop-blur-sm">
+            <div className="flex items-center gap-1.5 font-sans font-bold mb-1 tracking-wide uppercase text-[10px]">
               <MessageSquare size={12} /> AI Suggestion
             </div>
             Consider using an iterative approach here to avoid call stack limits on large inputs.
           </div>
-          <div className="ml-4 mt-2 opacity-80">{"return optimizeAST(ast);"}</div>
-          <div style={{ color: "var(--color-amber)", opacity: 0.8 }}>{"}"}</div>
+          <div className="ml-4 mt-3 opacity-80 text-white">{"return optimizeAST(ast);"}</div>
+          <div className="text-[var(--color-primary)] opacity-90">{"}"}</div>
         </div>
       </div>
     ) : (
-      <div
-        className="rounded-lg overflow-hidden mb-0"
-        style={{
-          background: "color-mix(in srgb, var(--color-plum) 30%, var(--bg-surface))",
-          border: "1px solid color-mix(in srgb, var(--color-amber) 10%, transparent)",
-        }}
-      >
-        <div
-          className="flex items-center gap-2 px-4 py-3"
-          style={{ borderBottom: "1px solid color-mix(in srgb, var(--color-amber) 10%, transparent)" }}
-        >
+      <div className="w-full h-full bg-black/50 flex flex-col relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-tr from-[var(--color-primary)]/10 via-transparent to-[var(--color-secondary)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-black/80 relative z-10">
           <div className="flex gap-1.5">
             <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
             <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
             <div className="w-3 h-3 rounded-full bg-[#28c840]" />
           </div>
-          <div
-            className="flex-1 text-center text-xs px-4 py-1 rounded-md"
-            style={{
-              background: "color-mix(in srgb, var(--color-amber) 8%, transparent)",
-              color: "var(--text-secondary)",
-            }}
-          >
+          <div className="flex-1 text-center text-xs px-4 py-1 rounded-md bg-[color-mix(in_srgb,var(--color-primary)_15%,transparent)] text-[var(--color-primary)] font-medium mx-4 border border-[color-mix(in_srgb,var(--color-primary)_20%,transparent)]">
             {project.title.toLowerCase()}.dev
           </div>
         </div>
-        <div className="aspect-video flex items-center justify-center p-8">
+        <div className="flex-1 flex items-center justify-center p-8 relative z-10">
           <div className="text-center">
-            <div className="text-3xl sm:text-4xl font-display font-bold mb-2" style={{ color: "var(--color-amber)" }}>
+            <div className="text-3xl sm:text-4xl font-display font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70 group-hover:from-[var(--color-primary)] group-hover:to-[var(--color-secondary)] transition-all duration-500">
               {project.title}
             </div>
-            <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-              {project.tags.join(" · ")}
+            <p className="text-sm text-white/50 tracking-wider uppercase">
+              {project.tech.join(" · ")}
             </p>
           </div>
         </div>
@@ -129,91 +73,67 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
   return (
     <motion.div
-      ref={ref}
-      className="relative group"
-      style={{ perspective: "1200px" }}
-      variants={cardVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ delay: index * 0.15 }}
-      whileHover="hover"
-      whileTap="tap"
+      initial={reduced ? { opacity: 1 } : { opacity: 0, y: 24 }}
+      whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ delay: index * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={reduced ? undefined : "hover"}
+      className="group h-full flex"
     >
-      <motion.div
-        style={{
-          rotateX: reduced ? 0 : rotateX,
-          rotateY: reduced ? 0 : rotateY,
-          transformStyle: "preserve-3d",
-        }}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={handleMouseLeave}
+      <Card
+        className="w-full flex flex-col relative border border-white/5 transition-all duration-500 overflow-hidden bg-gradient-to-b from-[var(--color-surface)] to-[#150207] shadow-xl group-hover:shadow-[0_20px_50px_color-mix(in_srgb,var(--color-primary)_20%,transparent)] group-hover:border-[color-mix(in_srgb,var(--color-primary)_50%,transparent)] rounded-2xl"
       >
-        <div
-          className="absolute -inset-[2px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{
-            background: "linear-gradient(135deg, var(--color-amber), var(--color-wine), var(--color-gold))",
-          }}
-        />
-        <Card className="relative border-2 hover:border-amber-400 transition-colors overflow-hidden group-hover:shadow-[0_20px_50px_color-mix(in_srgb,var(--color-amber)_20%,transparent)]">
-          <CardHeader className="p-0 pb-0">
-            {mockup}
-            <div className="px-6 pt-6 flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <Badge key={tag}>{tag}</Badge>
-              ))}
-            </div>
-            <CardTitle className="px-6 pt-4">{project.title}</CardTitle>
-            <CardDescription className="px-6">{project.description}</CardDescription>
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500 pointer-events-none" />
+        
+        <motion.div
+          variants={{ hover: { y: -4 } }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="w-full flex flex-col h-full z-10 relative"
+        >
+          <div className={`relative w-full overflow-hidden border-b border-white/5 bg-[#0a0205] ${isFeatured ? 'aspect-video md:aspect-[21/9]' : 'aspect-video'}`}>
+            <motion.div
+              variants={{ hover: { scale: 1.04 } }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="w-full h-full"
+            >
+              {mockup}
+            </motion.div>
+          </div>
+
+          <CardHeader className="pt-7 px-7">
+            <CardTitle className={`font-heading font-bold tracking-tight text-white/90 group-hover:text-white transition-colors duration-300 ${isFeatured ? 'text-3xl' : 'text-2xl'}`}>
+              {project.title}
+            </CardTitle>
+            <p className="text-[var(--color-primary)] text-sm font-semibold tracking-wide mt-1 uppercase">{project.subtitle}</p>
+            <CardDescription className="mt-4 text-base leading-relaxed text-white/60 group-hover:text-white/80 transition-colors duration-300">
+              {project.description}
+            </CardDescription>
           </CardHeader>
 
-          <CardContent>
-            <ul className="space-y-2">
-              {project.highlights.map((h, i) => (
-                <motion.li
-                  key={i}
-                  className="flex items-start gap-2 text-sm text-[var(--text-secondary)]"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={isHovered ? { opacity: 1, x: 0 } : { opacity: 0.7, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
+          <CardContent className="flex-grow px-7">
+            <div className="flex flex-wrap gap-2 mt-2">
+              {project.tech.map((tag) => (
+                <Badge
+                  key={tag}
+                  variant="outline"
+                  className="border-white/10 text-white/50 bg-white/5 group-hover:border-[color-mix(in_srgb,var(--color-secondary)_40%,transparent)] group-hover:text-[var(--color-secondary)] group-hover:bg-[color-mix(in_srgb,var(--color-secondary)_10%,transparent)] transition-all duration-300 py-1 px-3"
                 >
-                  <motion.span
-                    className="mt-1 shrink-0 text-[var(--color-amber)]"
-                    whileHover={{ scale: 1.2, rotate: 12 }}
-                  >
-                    ▸
-                  </motion.span>
-                  {h}
-                </motion.li>
+                  {tag}
+                </Badge>
               ))}
-            </ul>
+            </div>
           </CardContent>
 
-          <CardFooter className="gap-3 flex-wrap">
-            {project.repoUrl && (
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                <Button asChild variant="outline" size="sm">
-                  <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} on GitHub`}>
-                    <GithubIcon size={16} />
-                    View Code
-                  </a>
-                </Button>
-              </motion.div>
-            )}
-            {project.liveUrl && (
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                <Button asChild size="sm">
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} live`}>
-                    <ExternalLink size={16} />
-                    View Live
-                  </a>
-                </Button>
-              </motion.div>
-            )}
+          <CardFooter className="pt-6 pb-7 px-7 mt-4 border-t border-white/5 flex justify-end">
+            <Button asChild size="sm" variant={project.linkType === 'live' ? 'default' : 'outline'} className="rounded-full shadow-lg hover:shadow-[0_0_20px_color-mix(in_srgb,var(--color-primary)_40%,transparent)] transition-all duration-300">
+              <a href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} ${project.linkType}`}>
+                {project.linkType === "live" ? <ExternalLink size={16} /> : <GithubIcon size={16} />}
+                {project.linkType === "live" ? "View Live" : "View Code"}
+              </a>
+            </Button>
           </CardFooter>
-        </Card>
-      </motion.div>
+        </motion.div>
+      </Card>
     </motion.div>
   );
 }

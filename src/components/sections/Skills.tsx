@@ -1,133 +1,126 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Star, Code, Server, Database, Wrench } from "lucide-react";
-import { portfolio } from "../../data/portfolio";
-import { SectionWrapper } from "../ui/SectionWrapper";
-import { SkillPill } from "../ui/SkillPill";
-import { SparkleIcon } from "../ui/SparkleIcon";
-import { DecorativeRings } from "../ui/DecorativeRings";
-import { GradientBlob } from "../ui/GradientBlob";
-import { HoverHighlighter } from "../ui/HoverHighlighter";
-import { Tabs, TabsContent, TabsList, TabsTrigger, TabsIndicator } from "../ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { cardVariants } from "@/lib/animations";
+import { useMemo } from "react";
+import { motion } from "framer-motion";
+import { portfolio } from "@/data/portfolio";
+import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
-const categoryIcons: Record<string, typeof Code> = {
-  languages: Code,
-  "web-dev": Server,
-  databases: Database,
-  tools: Wrench,
+const proficiencyWeights: Record<string, number> = {
+  JavaScript: 1.4,
+  "Node.js": 1.3,
+  "Express.js": 1.2,
+  React: 1.3,
+  MongoDB: 1.1,
+  PostgreSQL: 1.0,
+  MySQL: 1.0,
+  Java: 1.0,
+  C: 0.9,
+  HTML5: 1.2,
+  CSS3: 1.2,
+  Bootstrap: 0.9,
+  Git: 1.1,
+  GitHub: 1.1,
 };
 
+function getWeight(skill: string) {
+  return proficiencyWeights[skill] ?? 0.85 + Math.random() * 0.3;
+}
+
 export function Skills() {
-  const { skillCategories } = portfolio;
-  const [activeTab, setActiveTab] = useState(skillCategories[0].id);
+  const reduced = useReducedMotion();
+  const allSkills = useMemo(
+    () =>
+      portfolio.skillCategories.flatMap((cat) =>
+        cat.skills.map((skill) => ({
+          skill,
+          category: cat.label,
+          weight: getWeight(skill),
+        }))
+      ),
+    []
+  );
+
+  const marqueeRow1 = [...allSkills, ...allSkills];
+  const marqueeRow2 = [...allSkills.slice().reverse(), ...allSkills.slice().reverse()];
 
   return (
-    <SectionWrapper id="skills" className="relative surface-plum section-padding overflow-hidden">
-      <DecorativeRings variant="plum" />
-      {/* Grid pattern */}
-      <div className="absolute inset-0 grid-pattern pointer-events-none opacity-40" />
-      {/* Floating blobs */}
-      <GradientBlob className="w-[350px] h-[350px] top-[10%] -left-20" color="wine" duration={16} />
-      <GradientBlob className="w-[300px] h-[300px] bottom-[5%] -right-10" color="amber" duration={13} delay={5} />
-
-      <div className="relative z-10 max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Star size={20} style={{ color: "var(--color-amber)" }} fill="var(--color-amber)" />
-            <h2 className="heading-lg" style={{ color: "var(--text-primary)" }}>
-              <HoverHighlighter
-                text="Expertise"
-                textColor="var(--text-primary)"
-                penColor="var(--color-amber)"
-                penOpacity={35}
-                penHeight={40}
-                penOffset={4}
-                className="inline"
-              />
-            </h2>
-            <SparkleIcon size={18} delay={0.5} />
-          </div>
-          <p className="text-base font-alt" style={{ color: "var(--text-secondary)" }}>
-            Technologies and tools I work with
+    <SectionWrapper id="skills" className="section-padding relative overflow-hidden">
+      <div className="max-w-7xl mx-auto mb-16 editorial-grid">
+        <div className="col-span-12 lg:col-span-6">
+          <SectionHeading label="02 — Expertise" title="Skills & Tools" />
+        </div>
+        <div className="col-span-12 lg:col-span-6 lg:flex lg:items-end lg:justify-end">
+          <p className="text-[var(--text-secondary)] text-base max-w-md lg:text-right">
+            Technologies and tools I work with — sized by proficiency and frequency of use.
           </p>
         </div>
+      </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="w-full justify-center mb-2">
-            {skillCategories.map((cat) => (
-              <TabsTrigger key={cat.id} value={cat.id} className="relative overflow-hidden font-alt">
-                {activeTab === cat.id && <TabsIndicator layoutId="skills-tab-indicator" />}
-                <span className="relative z-10">{cat.label}</span>
-              </TabsTrigger>
-            ))}
-          </TabsList>
-
-          {skillCategories.map((cat) => {
-            const IconComponent = categoryIcons[cat.id] || Code;
-            return (
-              <TabsContent key={cat.id} value={cat.id}>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={cat.id}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -12 }}
-                    transition={{ duration: 0.3 }}
+      <div className="space-y-6">
+        {[marqueeRow1, marqueeRow2].map((row, rowIndex) => (
+          <div
+            key={rowIndex}
+            className="overflow-hidden border-y border-[color-mix(in_srgb,var(--color-text-primary)_6%,transparent)] py-5 group"
+          >
+            {reduced ? (
+              <div className="flex flex-wrap gap-3 justify-center px-4">
+                {allSkills.map(({ skill }) => (
+                  <span key={skill} className="pill-outline">{skill}</span>
+                ))}
+              </div>
+            ) : (
+              <motion.div
+                className="flex gap-8 whitespace-nowrap px-4"
+                animate={{ x: rowIndex === 0 ? ["0%", "-50%"] : ["-50%", "0%"] }}
+                transition={{
+                  duration: rowIndex === 0 ? 40 : 45,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                whileHover={{ animationPlayState: "paused" }}
+                style={{ animationPlayState: "running" }}
+              >
+                {row.map(({ skill, weight, category }, i) => (
+                  <motion.span
+                    key={`${skill}-${i}`}
+                    data-cursor="hover"
+                    className="inline-flex flex-col items-start shrink-0 cursor-default"
+                    whileHover={{ scale: 1.05, color: "var(--color-accent)" }}
                   >
-                    <motion.div
-                      className="relative group"
-                      variants={cardVariants}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
-                      whileHover="hover"
-                      whileTap="tap"
+                    <span
+                      className="font-display font-semibold tracking-tight transition-colors"
+                      style={{ fontSize: `${0.85 + weight * 0.55}rem` }}
                     >
-                      <div
-                        className="absolute -inset-[2px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                        style={{
-                          background: "linear-gradient(135deg, var(--color-amber), var(--color-wine), var(--color-gold))",
-                        }}
-                      />
-                      <Card className="relative border-2 hover:border-amber-400 transition-colors group-hover:shadow-[0_16px_40px_color-mix(in_srgb,var(--color-amber)_18%,transparent)]">
-                        <CardHeader>
-                          <div className="flex items-center gap-3">
-                            <motion.div
-                              className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                              style={{ background: "color-mix(in srgb, var(--color-amber) 15%, transparent)" }}
-                              whileHover={{ scale: 1.15, rotate: 12 }}
-                              transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                            >
-                              <IconComponent size={20} style={{ color: "var(--color-amber)" }} />
-                            </motion.div>
-                            <CardTitle className="font-alt">{cat.label}</CardTitle>
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <motion.div
-                            className="flex flex-wrap justify-center gap-3"
-                            initial="hidden"
-                            animate="visible"
-                            variants={{
-                              hidden: {},
-                              visible: { transition: { staggerChildren: 0.05 } },
-                            }}
-                          >
-                            {cat.skills.map((skill, i) => (
-                              <SkillPill key={skill} name={skill} index={i} />
-                            ))}
-                          </motion.div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  </motion.div>
-                </AnimatePresence>
-              </TabsContent>
-            );
-          })}
-        </Tabs>
+                      {skill}
+                    </span>
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--text-secondary)] mt-1">
+                      {category}
+                    </span>
+                  </motion.span>
+                ))}
+              </motion.div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div className="max-w-7xl mx-auto mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {portfolio.skillCategories.map((cat, i) => (
+          <motion.div
+            key={cat.id}
+            className="border-subtle p-4 bg-[var(--color-surface)]"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.1 }}
+          >
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--color-accent)] mb-2">
+              {String(i + 1).padStart(2, "0")}
+            </p>
+            <p className="font-display font-medium text-sm">{cat.label}</p>
+            <p className="text-xs text-[var(--text-secondary)] mt-1">{cat.skills.length} skills</p>
+          </motion.div>
+        ))}
       </div>
     </SectionWrapper>
   );

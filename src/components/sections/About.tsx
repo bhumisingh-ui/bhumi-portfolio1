@@ -1,146 +1,85 @@
 import { motion } from "framer-motion";
 import { GraduationCap } from "lucide-react";
-import { portfolio } from "../../data/portfolio";
-import { SectionWrapper, StaggerContainer, staggerChildVariants } from "../ui/SectionWrapper";
-import { SparkleIcon } from "../ui/SparkleIcon";
-import { AnimatedCounter } from "../ui/AnimatedCounter";
-import { DecorativeRings } from "../ui/DecorativeRings";
-import { GradientBlob } from "../ui/GradientBlob";
-import { HoverHighlighter } from "../ui/HoverHighlighter";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../ui/card";
-import { cardVariants } from "@/lib/animations";
+import { portfolio } from "@/data/portfolio";
+import { SectionWrapper, StaggerContainer, staggerChildVariants } from "@/components/ui/SectionWrapper";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { OdometerCounter } from "@/components/ui/OdometerCounter";
+import { AnimatedTextReveal } from "@/components/ui/AnimatedTextReveal";
+import ShapeGrid from "@/components/ShapeGrid";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export function About() {
   const { about } = portfolio;
+  const reduced = useReducedMotion();
 
   return (
-    <SectionWrapper id="about" className="relative surface-cream section-padding overflow-hidden">
-      <DecorativeRings variant="cream" />
-      {/* Dot pattern background */}
-      <div className="absolute inset-0 dot-pattern pointer-events-none opacity-50" />
-      {/* Floating blobs */}
-      <GradientBlob className="w-[300px] h-[300px] -top-20 -right-20" color="amber" duration={14} />
-      <GradientBlob className="w-[250px] h-[250px] bottom-10 -left-10" color="gold" duration={12} delay={3} />
+    <SectionWrapper id="about" className="section-padding relative overflow-hidden">
+      {!reduced && (
+        <div className="absolute inset-0 z-0">
+          <ShapeGrid
+            speed={0.21}
+            squareSize={40}
+            direction="diagonal"
+            borderColor="#695688"
+            hoverFillColor="#e85d04"
+            shape="hexagon"
+            hoverTrailAmount={13}
+          />
+          <div className="absolute inset-0 bg-[var(--color-base)]/70 pointer-events-none" />
+        </div>
+      )}
+      <div className="relative z-10 max-w-7xl mx-auto editorial-grid items-start gap-y-12">
+        <div className="col-span-12 lg:col-span-5 lg:sticky lg:top-32">
+          <SectionHeading label="01 — About" title={about.greeting.replace("!", "")} />
+          <motion.p
+            variants={staggerChildVariants}
+            className="mt-6 text-6xl sm:text-7xl font-display font-bold text-[color-mix(in_srgb,var(--color-text-primary)_8%,transparent)] leading-none select-none"
+            aria-hidden="true"
+          >
+            BS
+          </motion.p>
+        </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto">
-        <StaggerContainer className="grid md:grid-cols-5 gap-10 lg:gap-16 items-start">
-          {/* Left - greeting + bio */}
-          <div className="md:col-span-3">
-            <motion.div variants={staggerChildVariants} className="mb-6">
-              <div className="flex items-center gap-3 mb-4">
-                <SparkleIcon size={20} delay={0.3} color="var(--color-amber)" />
-                <h2 className="heading-lg" style={{ color: "var(--color-plum)" }}>
-                  <HoverHighlighter
-                    text={about.greeting}
-                    textColor="var(--color-plum)"
-                    penColor="var(--color-amber)"
-                    penOpacity={30}
-                    penHeight={40}
-                    penOffset={4}
-                    className="inline"
-                  />
-                </h2>
-                <SparkleIcon size={16} delay={1.1} color="var(--color-gold)" />
-              </div>
-            </motion.div>
-
-            <motion.p
-              variants={staggerChildVariants}
-              className="text-base sm:text-lg leading-relaxed mb-8 font-alt"
-              style={{ color: "var(--color-text-dark)", opacity: 0.8 }}
-            >
+        <StaggerContainer className="col-span-12 lg:col-span-7 space-y-12">
+          <motion.div variants={staggerChildVariants}>
+            <p className="text-lg sm:text-xl leading-[1.7] text-[var(--text-primary)]">
               {about.bio}
-            </motion.p>
+            </p>
+          </motion.div>
 
-            {/* Education card */}
-            <motion.div variants={staggerChildVariants} className="relative group">
-              <motion.div
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                whileHover="hover"
-                whileTap="tap"
-              >
-                <div
-                  className="absolute -inset-[2px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{
-                    background: "linear-gradient(135deg, var(--color-amber), var(--color-wine), var(--color-gold))",
-                  }}
-                />
-                <Card className="relative border-2 hover:border-amber-400 transition-colors group-hover:shadow-[0_12px_35px_color-mix(in_srgb,var(--color-amber)_15%,transparent)]">
-                  <CardHeader>
-                    <div className="flex items-start gap-4">
-                      <motion.div
-                        className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                        style={{ background: "color-mix(in srgb, var(--color-amber) 15%, transparent)" }}
-                        whileHover={{ scale: 1.15, rotate: 12 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                      >
-                        <GraduationCap size={22} style={{ color: "var(--color-amber)" }} />
-                      </motion.div>
-                      <div>
-                        <CardTitle className="text-base sm:text-lg">{about.education.degree}</CardTitle>
-                        <CardDescription style={{ color: "var(--color-text-dark)", opacity: 0.7 }}>
-                          {about.education.school}
-                        </CardDescription>
-                        <p className="text-xs mt-0.5 font-mono" style={{ color: "var(--color-text-dark)", opacity: 0.5 }}>
-                          {about.education.university} · {about.education.period}
-                        </p>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="px-3 py-1 rounded-full text-sm font-bold font-mono"
-                        style={{
-                          background: "color-mix(in srgb, var(--color-amber) 15%, transparent)",
-                          color: "var(--color-amber)",
-                        }}
-                      >
-                        CGPA: {about.education.cgpa}
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            </motion.div>
-          </div>
-
-          {/* Right - LeetCode counter */}
-          <motion.div variants={staggerChildVariants} className="md:col-span-2">
-            <div
-              className="rounded-2xl p-6 sm:p-8 text-center relative overflow-hidden"
-              style={{
-                background: "linear-gradient(135deg, var(--color-plum), var(--color-wine))",
-                border: "1px solid color-mix(in srgb, var(--color-amber) 15%, transparent)",
-              }}
-            >
-              {/* Grid pattern overlay */}
-              <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
-              <div className="relative z-10">
-                <SparkleIcon size={24} delay={0.6} color="var(--color-gold)" className="mx-auto mb-4" />
-                <AnimatedCounter
-                  target={about.leetcode.count}
-                  suffix="+"
-                  label={about.leetcode.label}
-                  className="mb-2"
-                />
-                <div className="mt-6 pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="text-center">
-                      <div className="text-2xl font-display font-bold" style={{ color: "var(--color-gold)" }}>2</div>
-                      <div className="text-xs mt-1 font-alt" style={{ color: "rgba(255,255,255,0.6)" }}>Major Projects</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-display font-bold" style={{ color: "var(--color-gold)" }}>8.94</div>
-                      <div className="text-xs mt-1 font-alt" style={{ color: "rgba(255,255,255,0.6)" }}>CGPA</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <motion.div
+            variants={staggerChildVariants}
+            className="grid sm:grid-cols-2 gap-6"
+          >
+            <div className="border-subtle p-6 sm:p-8 bg-[var(--color-surface)] group hover:border-[color-mix(in_srgb,var(--color-accent)_30%,transparent)] transition-colors duration-500">
+              <GraduationCap size={20} className="text-[var(--color-accent)] mb-4" />
+              <h3 className="font-display text-lg font-semibold mb-2">{about.education.degree}</h3>
+              <p className="text-sm text-[var(--text-secondary)] mb-1">{about.education.school}</p>
+              <p className="text-xs text-[var(--text-secondary)] opacity-60 mb-4">
+                {about.education.university} · {about.education.period}
+              </p>
+              <span className="pill-outline text-[var(--color-accent)] border-[color-mix(in_srgb,var(--color-accent)_40%,transparent)]">
+                CGPA {about.education.cgpa}
+              </span>
             </div>
+
+            <div className="border-subtle p-6 sm:p-8 bg-[var(--color-surface-alt)] flex flex-col justify-center items-center">
+              <OdometerCounter
+                value={about.leetcode.count}
+                suffix="+"
+                label={about.leetcode.label}
+              />
+            </div>
+          </motion.div>
+
+          <motion.div variants={staggerChildVariants} className="border-t border-[color-mix(in_srgb,var(--color-text-primary)_8%,transparent)] pt-8">
+            <AnimatedTextReveal
+              text="Building complete platforms — from database schemas to pixel-perfect frontends."
+              as="p"
+              splitBy="word"
+              className="text-2xl sm:text-3xl font-display font-medium text-[var(--text-primary)] leading-snug"
+              stagger={0.06}
+            />
           </motion.div>
         </StaggerContainer>
       </div>
