@@ -3,17 +3,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #03071e;
-  --color-surface: #370617;
-  --color-surface-alt: #6a040f;
-  --color-border: #9d0208;
-  --color-primary: #dc2f02;
-  --color-secondary: #ffba08;
-  --color-muted: #f48c06;
-  --color-off-white: #ffffff;
-  --color-accent: #dc2f02;
-  --color-accent-dim: #ffba08;
-  --color-accent-glow: rgba(220, 47, 2, 0.35);
+  --color-void: #0d0e1c;
+  --color-void-deep: #070810;
+  --color-surface: #161830;
+  --color-surface-raised: #1f2240;
+  --color-border: #2a2e54;
+  --color-muted: #8b8fa3;
+  --color-off-white: #eef0f7;
+  --color-accent: #ff6b4a;
+  --color-accent-dim: #7c83fd;
+  --color-accent-glow: rgba(255, 107, 74, 0.35);
 
   --font-display: "Clash Display", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
@@ -21,14 +20,14 @@
 }
 
 :root {
-  --bg-primary: var(--color-background);
+  --bg-primary: var(--color-void);
   --bg-surface: var(--color-surface);
   --text-primary: var(--color-off-white);
   --text-secondary: var(--color-muted);
   --accent: var(--color-accent);
   --accent-dim: var(--color-accent-dim);
-  --scroll-hue: 15;
-  --ambient-bg: var(--color-background);
+  --scroll-hue: 240;
+  --ambient-bg: #0d0e1c;
 }
 
 @layer base {
